@@ -1,0 +1,54 @@
+.App {
+  text-align: center;
+  height: 100vh; /* Set the height of the app to fill the viewport */
+  display: flex; /* Use flexbox to center the content vertically */
+  flex-direction: column; /* Stack children vertically */
+}
+
+.App-header {
+  background-color: #282c34;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.brand h1 {
+  margin-left: 1rem;
+  background: -webkit-linear-gradient(left, #ff758c 0%, #61dafb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-size: 2rem;
+}
+
+.home-link {
+  text-decoration: none; /* Removes the underline */
+  color: inherit; /* Inherits the color from the parent elements */
+}
+
+.home-link:hover {
+  cursor: pointer;
+}
+
+.navigation button {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #61dafb;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.main-content {
+  background-color: #282c34;
+  color: white;
+  flex: 1; /* This will make the main content fill the remaining space */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: start; /* Align to the top */
+  padding-top: 5vh; /* Adjust the padding to move the content up */
+}
