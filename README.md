@@ -5,6 +5,14 @@ This project is for COMP 539
 Before you use this project, please do `npm install` at first to download\
 required packages.
 
+### Frontend Preview
+
+<img src="imgs/origin.png" width="600" height="400">
+
+After shorten a origin link
+
+<img src="imgs/OneLink.png" width="600" height="400">
+
 ### `npm start`
 
 Runs the app in the development mode.\
