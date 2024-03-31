@@ -12,6 +12,7 @@ import "./URLShortenerForm.css";
 const URLShortenerForm = () => {
   const [url, setUrl] = useState(""); // For the input field
   const [urls, setUrls] = useState([]); // For storing the list of URLs
+  const [copied, setCopied] = useState({}); // Object to track copied state of URLs
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +27,26 @@ const URLShortenerForm = () => {
     }
   };
 
+  const copyToClipboard = (urlToCopy, index) => {
+    navigator.clipboard
+      .writeText(urlToCopy)
+      .then(() => {
+        setCopied((prevCopied) => ({
+          ...prevCopied,
+          [index]: true, // Set copied state to true for the clicked URL
+        }));
+        // Set a timeout to reset the state after 3 seconds
+        setTimeout(() => {
+          setCopied((prevCopied) => ({
+            ...prevCopied,
+            [index]: false,
+          }));
+        }, 3000);
+      })
+      .catch((err) => {
+        console.error("Could not copy text: ", err);
+      });
+  };
   return (
     <div className="url-shortener-form-container">
       <h2 className="h2-text">Quick Tiny URL</h2>
@@ -45,7 +66,15 @@ const URLShortenerForm = () => {
       <div className="url-list-container">
         <ul>
           {urls.map((savedUrl, index) => (
-            <li key={index}>{savedUrl}</li>
+            <li key={index} className="url-list-item">
+              <span>{`${index + 1}. ${savedUrl}`}</span>
+              <button
+                onClick={() => copyToClipboard(savedUrl, index)}
+                className={`copy-button ${copied[index] ? "copied" : ""}`}
+              >
+                {copied[index] ? "Copied" : "Copy"}
+              </button>
+            </li>
           ))}
         </ul>
       </div>

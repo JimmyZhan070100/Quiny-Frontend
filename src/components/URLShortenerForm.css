@@ -82,3 +82,34 @@
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Subtle text shadow for elegance */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
 }
+
+.url-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.copy-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  background-color: #45a049; /* A darker green color for the hover state */
+}
+
+.copy-button.copied {
+  background-color: #ccc;
+  pointer-events: none; /* Optional: Disables the button after copying */
+}
+
+.copy-button,
+.copy-button.copied {
+  transition: background-color 0.3s;
+}
