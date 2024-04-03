@@ -63,7 +63,6 @@
 .url-list-container {
   margin-top: 1rem;
   text-align: left;
-  max-height: 300px; /* Set a maximum height for the container */
   overflow-y: auto; /* Add a scrollbar when content overflows vertically */
 }
 

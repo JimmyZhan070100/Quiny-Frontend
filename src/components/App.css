@@ -3,6 +3,7 @@
   height: 100vh; /* Set the height of the app to fill the viewport */
   display: flex; /* Use flexbox to center the content vertically */
   flex-direction: column; /* Stack children vertically */
+  overflow-y: auto; /* Add a scrollbar when content overflows vertically */
 }
 
 .App-header {
