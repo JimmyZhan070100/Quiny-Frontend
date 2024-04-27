@@ -24,17 +24,27 @@ const LoginButton = ({ isLoggedIn, onLoginSuccess, onLogoutSuccess }) => {
     console.error("Login Failed:", error);
   };
 
+  const handleLogout = () => {
+      console.log("Logging out...");
+      onLogoutSuccess(); // Call parent function on logout
+      navigate("/");
+  };
+
   return (
-    <GoogleLogin
-      onSuccess={handleGoogleLogin}
-      onFailure={handleGoogleLoginFailure}
-      render={({ onClick }) => (
-        <button onClick={onClick}>
-            {isLoggedIn ? "Logout" : "Login with Google"}
-        </button>
+    <>
+      {isLoggedIn ? (
+        <button onClick={handleLogout}>Logout</button>
+      ) : (
+        <GoogleLogin
+          onSuccess={handleGoogleLogin}
+          onFailure={handleGoogleLoginFailure}
+          render={({ onClick }) => (
+            <button onClick={onClick}>Login with Google</button>
+          )}
+          useOneTap
+        />
       )}
-      useOneTap
-    />
+    </>
   );
 };
 
@@ -45,8 +55,8 @@ function App() {
     setIsLoggedIn(true);
   };
 
-  const handleLogoutSuccess = (response) => {
-    console.log("Logout Success:", response);
+  const handleLogoutSuccess = () => {
+    console.log("Logout Success");
     googleLogout();
     setIsLoggedIn(false);
   };
