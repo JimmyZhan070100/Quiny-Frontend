@@ -47,6 +47,13 @@ const URLShortenerForm = () => {
         console.error("Could not copy text: ", err);
       });
   };
+
+  // Function to generate the QR code URL
+  const generateQRCodeURL = (text) => {
+    const encodedText = encodeURIComponent(text); // URL-encode the text
+    return `https://api.qrserver.com/v1/create-qr-code/?data=${encodedText}&size=100x100`;
+  };
+
   return (
     <div className="url-shortener-form-container">
       <h2 className="h2-text">Quick Tiny URL</h2>
@@ -74,6 +81,12 @@ const URLShortenerForm = () => {
               >
                 {copied[index] ? "Copied" : "Copy"}
               </button>
+              {/* QR Code Image */}
+              <img
+                src={generateQRCodeURL(savedUrl)}
+                alt="QR Code"
+                className="qr-code-image"
+              />
             </li>
           ))}
         </ul>

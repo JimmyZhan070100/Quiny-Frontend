@@ -5,6 +5,13 @@ This project is for COMP 539
 Before you use this project, please do `npm install` at first to download\
 required packages.
 
+### Usage
+
+Create an `.env` file at the top of directory, so that the Google Login API can work correctly.
+
+Add following:
+`REACT_APP_GOOGLE_CLIENT_ID={YOUR GOOGLE CLINET ID}`
+
 ### Frontend Preview
 
 <img src="imgs/origin.png" width="600" height="400">

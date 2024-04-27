@@ -89,6 +89,10 @@
   padding: 0.5rem;
 }
 
+.url-list-item span {
+  flex-grow: 1; /* Allows the URL to take up available space */
+}
+
 .copy-button {
   margin-left: 10px;
   padding: 5px 10px;
@@ -111,4 +115,11 @@
 .copy-button,
 .copy-button.copied {
   transition: background-color 0.3s;
+}
+
+.qr-code-image {
+  margin-left: 10px; /* Adjust as needed */
+  width: 100px; /* Adjust based on the size of the QR code */
+  height: 100px; /* Adjust based on the size of the QR code */
+  order: 2;
 }
