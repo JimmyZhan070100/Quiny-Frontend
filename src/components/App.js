@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,24 +8,25 @@ import {
 } from "react-router-dom";
 import URLShortenerForm from "./URLShortenerForm";
 import "./App.css";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
+import GoogleLogin from "react-google-login";
+import GoogleLogout from "react-google-login";
 
-const LoginButton = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate(); // Now it's inside a component that is a child of <Router>
+const LoginButton = ({ onLoginSuccess, onLogoutSuccess }) => {
+  const navigate = useNavigate();
 
   const handleGoogleLogin = (response) => {
-    console.log(response);
-    navigate("/"); // Navigate to the homepage on successful login
+    console.log("Login Success:", response);
+    onLoginSuccess(response); // Lift up the state
+    navigate("/");
   };
 
   const handleGoogleLoginFailure = (error) => {
-    console.error(error);
+    console.error("Login Failed:", error);
   };
 
   return (
     <GoogleLogin
-      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID} // Add Cliend ID in .env file
+      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
       buttonText="Login with Google"
       onSuccess={handleGoogleLogin}
       onFailure={handleGoogleLoginFailure}
@@ -35,28 +36,47 @@ const LoginButton = () => {
 };
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  const handleLoginSuccess = (response) => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogoutSuccess = (response) => {
+    console.log("Logout Success:", response);
+    setIsLoggedIn(false);
+  };
+
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <div className="brand">
-            <Link to="/" className="home-link">
-              <h1>Quiny</h1>
-            </Link>
-          </div>
-          <nav className="navigation">
-            <LoginButton /> {/* Use the new LoginButton component */}
-            <button className="register">Register Now</button>
-          </nav>
-        </header>
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<URLShortenerForm />} />
-            {/* Add other routes here */}
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <div className="App">
+      <header className="App-header">
+        <div className="brand">
+          <Link to="/" className="home-link">
+            <h1>Quiny</h1>
+          </Link>
+        </div>
+        <nav className="navigation">
+          {isLoggedIn ? (
+            <GoogleLogout
+              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              buttonText="Logout"
+              onLogoutSuccess={handleLogoutSuccess}
+            />
+          ) : (
+            <LoginButton
+              onLoginSuccess={handleLoginSuccess}
+              onLogoutSuccess={handleLogoutSuccess}
+            />
+          )}
+        </nav>
+      </header>
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<URLShortenerForm />} />
+          {/* Add other routes here */}
+        </Routes>
+      </main>
+    </div>
   );
 }
 
