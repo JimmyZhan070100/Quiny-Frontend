@@ -41,7 +41,6 @@ const LoginButton = ({ isLoggedIn, onLoginSuccess, onLogoutSuccess }) => {
           render={({ onClick }) => (
             <button onClick={onClick}>Login with Google</button>
           )}
-          useOneTap
         />
       )}
     </>
