@@ -8,10 +8,10 @@ import {
 } from "react-router-dom";
 import URLShortenerForm from "./URLShortenerForm";
 import "./App.css";
-import GoogleLogin from "react-google-login";
-import GoogleLogout from "react-google-login";
+import { GoogleLogin, useGoogleOneTapLogin, googleLogout } from '@react-oauth/google';
 
-const LoginButton = ({ onLoginSuccess, onLogoutSuccess }) => {
+
+const LoginButton = ({ isLoggedIn, onLoginSuccess, onLogoutSuccess }) => {
   const navigate = useNavigate();
 
   const handleGoogleLogin = (response) => {
@@ -26,11 +26,14 @@ const LoginButton = ({ onLoginSuccess, onLogoutSuccess }) => {
 
   return (
     <GoogleLogin
-      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-      buttonText="Login with Google"
       onSuccess={handleGoogleLogin}
       onFailure={handleGoogleLoginFailure}
-      cookiePolicy={"single_host_origin"}
+      render={({ onClick }) => (
+        <button onClick={onClick}>
+            {isLoggedIn ? "Logout" : "Login with Google"}
+        </button>
+      )}
+      useOneTap
     />
   );
 };
@@ -44,6 +47,7 @@ function App() {
 
   const handleLogoutSuccess = (response) => {
     console.log("Logout Success:", response);
+    googleLogout();
     setIsLoggedIn(false);
   };
 
@@ -56,18 +60,11 @@ function App() {
           </Link>
         </div>
         <nav className="navigation">
-          {isLoggedIn ? (
-            <GoogleLogout
-              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-              buttonText="Logout"
-              onLogoutSuccess={handleLogoutSuccess}
-            />
-          ) : (
-            <LoginButton
-              onLoginSuccess={handleLoginSuccess}
-              onLogoutSuccess={handleLogoutSuccess}
-            />
-          )}
+          <LoginButton
+            isLoggedIn={isLoggedIn}
+            onLoginSuccess={handleLoginSuccess}
+            onLogoutSuccess={handleLogoutSuccess}
+          />
         </nav>
       </header>
       <main className="main-content">
